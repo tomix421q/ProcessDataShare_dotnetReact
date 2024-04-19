@@ -1,0 +1,23 @@
+|AUTO RUN ON PC =>
+
+Pro spuštění vašeho serveru pomocí PM2 a nastavení ho jako službu na vašem počítači můžete postupovat následovně:
+
+Instalace PM2:
+Nejprve musíte nainstalovat PM2. To můžete udělat pomocí npm (Node Package Manager), pokud ještě nemáte nainstalovaný PM2:
+
+npm install pm2 -g
+Tento příkaz nainstaluje PM2 globálně, což znamená, že jej budete moci používat z libovolného umístění ve vašem systému.
+
+Spouštění vašeho serveru pomocí PM2:
+Navigujte do kořenového adresáře vašeho projektu, kde je uložen váš soubor app.js, a spusťte následující příkaz:
+
+pm2 start app.js
+Tímto příkazem spustíte váš server pomocí PM2. PM2 bude monitorovat váš server a zajistí, aby se znovu spustil v případě chyby nebo restartu počítače.
+
+Nastavení serveru jako služby:
+Aby byl váš server spuštěn automaticky po startu počítače, můžete jej nastavit jako službu pomocí PM2. K tomu použijte následující příkaz:
+
+pm2 startup
+Tento příkaz vám poskytne příkaz, který musíte spustit, aby byl PM2 integrován do systému a spouštěl se po startu počítače. Spusťte tento příkaz a postupujte podle instrukcí, které vám PM2 poskytne.
+
+Po dokončení těchto kroků by měl váš server běžet jako služba a spouštět se automaticky po startu počítače. Můžete provést další konfiguraci PM2 podle vašich potřeb pomocí dalších příkazů, jako je například pm2 save pro uložení aktuálního stavu procesů PM2.
