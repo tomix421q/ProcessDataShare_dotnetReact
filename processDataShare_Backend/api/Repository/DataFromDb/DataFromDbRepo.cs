@@ -3,6 +3,7 @@ using api.Helpers;
 using api.Interfaces.CollectFromDb;
 using api.Models.databaseModels.ASQ;
 using api.Models.databaseModels.EQC;
+using api.Models.databaseModels.OPEL;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Repository.DataFromDb
@@ -166,7 +167,6 @@ namespace api.Repository.DataFromDb
             var data = await eqcdb.Skip(skimNumber).Take(query.PageSize).ToListAsync();
             return data;
         }
-
 
 
         // _____________________EQC_6_____________________
@@ -447,5 +447,95 @@ namespace api.Repository.DataFromDb
             var data = await asqdb.Skip(skimNumber).Take(query.PageSize).ToListAsync();
             return data;
         }
+
+
+        //
+        //____________________OPEL______________________
+        //
+        public async Task<List<Db_ArmrestFr>> GetAll_opelArmrestFr(QueryObject query)
+        {
+            var dbData = _context.OpelArmrestFr_data.AsQueryable();
+
+            if (query.DateFrom.HasValue)
+            {
+                dbData = dbData.Where(s => s.TimeStamp >= query.DateFrom);
+            }
+            if (query.DateTo.HasValue)
+            {
+                dbData = dbData.Where(s => s.TimeStamp <= query.DateTo);
+            }
+
+            dbData = query.IsDecsending ? dbData.OrderByDescending(s => s.TimeStamp) : dbData.OrderBy(s => s.TimeStamp);
+            var totalRecords = await dbData.CountAsync();
+            _totalRecords = totalRecords;
+            var skimNumber = (query.PageNumber - 1) * query.PageSize;
+            var data = await dbData.Skip(skimNumber).Take(query.PageSize).ToListAsync();
+            return data;
+        }
+
+        public async Task<List<Db_ArmrestRr>> GetAll_opelArmrestRr(QueryObject query)
+        {
+            var dbData = _context.OpelArmrestRr_data.AsQueryable();
+
+            if (query.DateFrom.HasValue)
+            {
+                dbData = dbData.Where(s => s.TimeStamp >= query.DateFrom);
+            }
+            if (query.DateTo.HasValue)
+            {
+                dbData = dbData.Where(s => s.TimeStamp <= query.DateTo);
+            }
+
+            dbData = query.IsDecsending ? dbData.OrderByDescending(s => s.TimeStamp) : dbData.OrderBy(s => s.TimeStamp);
+            var totalRecords = await dbData.CountAsync();
+            _totalRecords = totalRecords;
+            var skimNumber = (query.PageNumber - 1) * query.PageSize;
+            var data = await dbData.Skip(skimNumber).Take(query.PageSize).ToListAsync();
+            return data;
+        }
+
+
+        //For future-------->
+        // public async Task<List<Db_InsertFr>> GetAll_opelInsertFr(QueryObject query)
+        // {
+        //     var dbData = _context.OpelInsertFr_data.AsQueryable();
+
+        //     if (query.DateFrom.HasValue)
+        //     {
+        //         dbData = dbData.Where(s => s.TimeStamp >= query.DateFrom);
+        //     }
+        //     if (query.DateTo.HasValue)
+        //     {
+        //         dbData = dbData.Where(s => s.TimeStamp <= query.DateTo);
+        //     }
+
+        //     dbData = query.IsDecsending ? dbData.OrderByDescending(s => s.TimeStamp) : dbData.OrderBy(s => s.TimeStamp);
+        //     var totalRecords = await dbData.CountAsync();
+        //     _totalRecords = totalRecords;
+        //     var skimNumber = (query.PageNumber - 1) * query.PageSize;
+        //     var data = await dbData.Skip(skimNumber).Take(query.PageSize).ToListAsync();
+        //     return data;
+        // }
+
+        // public async Task<List<Db_InsertRr>> GetAll_opelInsertRr(QueryObject query)
+        // {
+        //     var dbData = _context.OpelInsertRr_data.AsQueryable();
+
+        //     if (query.DateFrom.HasValue)
+        //     {
+        //         dbData = dbData.Where(s => s.TimeStamp >= query.DateFrom);
+        //     }
+        //     if (query.DateTo.HasValue)
+        //     {
+        //         dbData = dbData.Where(s => s.TimeStamp <= query.DateTo);
+        //     }
+
+        //     dbData = query.IsDecsending ? dbData.OrderByDescending(s => s.TimeStamp) : dbData.OrderBy(s => s.TimeStamp);
+        //     var totalRecords = await dbData.CountAsync();
+        //     _totalRecords = totalRecords;
+        //     var skimNumber = (query.PageNumber - 1) * query.PageSize;
+        //     var data = await dbData.Skip(skimNumber).Take(query.PageSize).ToListAsync();
+        //     return data;
+        // }
     }
 }

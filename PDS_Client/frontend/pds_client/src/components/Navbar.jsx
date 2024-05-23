@@ -9,13 +9,6 @@ const Navbar = () => {
   const navRef = useRef(null)
   const isHomePage = window.location.pathname == '/'
 
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Backspace') {
-      event.preventDefault()
-      window.history.go(-1)
-    }
-  })
-
   const handleNav = () => {
     setNav(!nav)
   }
@@ -80,7 +73,7 @@ const Navbar = () => {
         onClick={() => window.history.go(-1)}
       >
         <h4 className='flex flex-row'>
-          <IoChevronBack size={50} className='hover:text-collor2'/>
+          <IoChevronBack size={50} className='hover:text-collor2' />
           {/* <span className='z-10 group-hover:relative hidden fixed group-hover:flex transition-all ease-in duration-200 text-4xl text-primary justify-center items-center pl-3'>
             BACK
           </span> */}

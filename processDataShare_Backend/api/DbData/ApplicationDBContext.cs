@@ -1,5 +1,6 @@
 using api.Models.databaseModels.ASQ;
 using api.Models.databaseModels.EQC;
+using api.Models.databaseModels.OPEL;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.DbData
@@ -27,6 +28,10 @@ namespace api.DbData
         public DbSet<Db_eqc6Model> EqcDatas_eqc6 { get; set; }
         public DbSet<Db_eqc7Model> EqcDatas_eqc7 { get; set; }
         public DbSet<Db_eqc8Model> EqcDatas_eqc8 { get; set; }
+        //OPEL
+        public DbSet<Db_ArmrestFr> OpelArmrestFr_data { get; set; }
+        public DbSet<Db_ArmrestRr> OpelArmrestRr_data { get; set; }
+
 
     }
 

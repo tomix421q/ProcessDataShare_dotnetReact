@@ -11,25 +11,24 @@ using Microsoft.EntityFrameworkCore;
 // SK3180WS0160\\SQLEXPRESS
 // SK3180WS0205\\SQLEXPRESS
 
-
 var builder = WebApplication.CreateBuilder(args);
 
-// builder.WebHost.UseUrls("http://10.184.147.55:5147");
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddHostedService<AsqCollectorDb>();
 builder.Services.AddHostedService<EqcCollectorDb>();
+builder.Services.AddHostedService<OpelCollectorDb>();
 
 
 //DB IMPLEMENTATION
 builder.Services.AddDbContext<ApplicationDBContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-
 });
+
 // 
 // INTERFACES IMPLEMENTATION
 // 
@@ -41,13 +40,17 @@ builder.Services.AddScoped<IOpelLiveDataService, OpelLiveDataRepo>();
 //Db interfaces
 builder.Services.AddTransient<IAsqDataDb, AsqDbDataRepo>();
 builder.Services.AddTransient<IEqcDataDb, EqcDbDataRepo>();
+builder.Services.AddTransient<IOpelDataDb, OpelDbDataRepo>();
 //Db from interfaces
 builder.Services.AddScoped<IDataFromDb, DataFromDbRepo>();
 
-
+// Force environment to Development
+builder.Environment.EnvironmentName = "Development";
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -66,25 +69,11 @@ app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 app.MapControllers();
 
-app.Urls.Add("http://10.184.147.55:5147");
-// app.Urls.Add("http://localhost:5147");
+// app.Urls.Add("http://10.184.147.55:5147");
+app.Urls.Add("http://localhost:5147");
 
 app.Run();
 
-// "Kestrel": {
-//     "Endpoints": {
-//         "Http": {
-//             "Url": "http://10.184.147.55:5147",
-//         "Urls": "http://localhost:5147"
-//         }
-//     }
-// },
+// PRODUCTION DB STRING
+// "Data Source=SK3180WS0160\\SQLEXPRESS;Initial Catalog=PDSDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
 
-
-// "Kestrel": {
-//     "Endpoints": {
-//         "Http": {
-//             "Url": "http://localhost:5147"
-//         }
-//     }
-// }

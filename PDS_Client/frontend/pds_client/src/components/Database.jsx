@@ -35,7 +35,7 @@ const Database = () => {
               </div>
             </Link>
             <Link
-              to='/dashboardall'
+              to='/database/dbopelmachines'
               className='w-full lg:min-w-[500px] max-w-[650px] h-[18.75rem] lg:h-[700px] rounded-2xl shadow-lg shadow-black uppercase p-5 hover:shadow-collor1 drop-shadow-sm transition-all duration-200 hover:ring-4 ring-inset bg-collor2/60 overflow-hidden'
             >
               <div className='flex flex-col group justify-between h-full'>

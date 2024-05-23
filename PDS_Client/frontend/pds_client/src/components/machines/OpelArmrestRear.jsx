@@ -11,7 +11,7 @@ const OpelArmrestRear = () => {
   const [data, setData] = useState([])
   const [loadingData, setLoadingData] = useState(true)
   const [comError, setComError] = useState(false)
-  const [showPicture, setShowPicture] = useState(false)
+  // const [showPicture, setShowPicture] = useState(false)
 
   // GET DATA
   const fetchData = async () => {
@@ -133,6 +133,12 @@ const OpelArmrestRear = () => {
                 </p>
                 <p>
                   Pyrometer on :<span className='font-bold text-secondary text-xl'>{data.pyroIndicatorOnOff ? 'yes' : 'no'}</span>
+                </p>
+                <p>
+                  Water temp. left : <span className='font-bold text-secondary text-xl'>{data.waterTempLeft} &deg;C</span>
+                </p>
+                <p>
+                  Water temp. right : <span className='font-bold text-secondary text-xl'>{data.waterTempRight} &deg;C</span>
                 </p>
                 <p>
                   Date last shot : <span className='font-bold text-secondary text-xl'>{data.shotDateTime}</span>

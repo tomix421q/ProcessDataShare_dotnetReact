@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace api.Models
 {
     public class OpelArmrestModel
@@ -22,5 +24,9 @@ namespace api.Models
         public ushort mouldNumber { get; set; }
         public int recipe { get; set; }
         public bool pyroIndicatorOnOff { get; set; }
+        [DisplayFormat(DataFormatString = "{0:F2}")]
+        public double WaterTempLeft { get; set; }
+        [DisplayFormat(DataFormatString = "{0:F2}")]
+        public double WaterTempRight { get; set; }
     }
 }

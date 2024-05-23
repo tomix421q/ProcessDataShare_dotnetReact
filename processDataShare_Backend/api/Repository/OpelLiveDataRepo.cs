@@ -28,7 +28,7 @@ namespace api.Repository
                         OpelArmrestmodel.actualDowntime = ((ushort)await plc.ReadAsync("DB26.DBW0.0")).ConvertToShort();
 
                         int startAdress = 14; // Adresa UDT
-                        int sizeInBytes = 39; // Veľkosť UDT v bajtoch 39
+                        int sizeInBytes = 48; // Veľkosť UDT v bajtoch 39
                         int numberDB = 26; // Cislo DB blocku v plc
 
                         //Scan UDT
@@ -47,6 +47,9 @@ namespace api.Repository
                         OpelArmrestmodel.mouldNumber = S7.Net.Types.Word.FromByteArray(udtData.Skip(34).Take(2).ToArray());
                         OpelArmrestmodel.recipe = S7.Net.Types.Int.FromByteArray(udtData.Skip(36).Take(2).ToArray());
                         OpelArmrestmodel.pyroIndicatorOnOff = udtData[38].SelectBit(0);
+
+                        OpelArmrestmodel.WaterTempLeft = (double)Math.Round(S7.Net.Types.Real.FromByteArray(udtData.Skip(40).Take(4).ToArray()), 2);
+                        OpelArmrestmodel.WaterTempRight = (double)Math.Round(S7.Net.Types.Real.FromByteArray(udtData.Skip(44).Take(4).ToArray()), 2);
                     }
                     else
                     {

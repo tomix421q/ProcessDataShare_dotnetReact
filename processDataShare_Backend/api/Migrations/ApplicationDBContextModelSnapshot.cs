@@ -1126,6 +1126,56 @@ namespace api.Migrations
 
                     b.ToTable("EqcDatas_eqc8");
                 });
+
+            modelBuilder.Entity("api.Models.databaseModels.OPEL.Db_ArmrestFr", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("WaterTempLeft")
+                        .HasColumnType("float");
+
+                    b.Property<double>("WaterTempRight")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OpelArmrestFr_data");
+                });
+
+            modelBuilder.Entity("api.Models.databaseModels.OPEL.Db_ArmrestRr", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("WaterTempLeft")
+                        .HasColumnType("float");
+
+                    b.Property<double>("WaterTempRight")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OpelArmrestRr_data");
+                });
 #pragma warning restore 612, 618
         }
     }

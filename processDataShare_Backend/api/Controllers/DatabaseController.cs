@@ -182,6 +182,33 @@ namespace api.Controllers
             return Ok(new { asqdb, totalRecords });
         }
 
+        // _________________________________OPEL MACHINES________________________________
+        [HttpGet]
+        [Route("opelArmrestFR")]
+        public async Task<IActionResult> GetAll_opelArmrestFr([FromQuery] QueryObject query)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var opelData = await _dbdata.GetAll_opelArmrestFr(query);
+            var totalRecords = await _dbdata.GetNumRecords();
+            return Ok(new { opelData, totalRecords });
+        }
+
+        [HttpGet]
+        [Route("opelArmrestRR")]
+        public async Task<IActionResult> GetAll_opelArmrestRr([FromQuery] QueryObject query)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var opelData = await _dbdata.GetAll_opelArmrestRr(query);
+            var totalRecords = await _dbdata.GetNumRecords();
+            return Ok(new { opelData, totalRecords });
+        }
+
+
+
 
     }
 }

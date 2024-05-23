@@ -34,6 +34,7 @@ import OpelArmrestRear from './components/machines/OpelArmrestRear'
 
 //load config
 import loadConfig from '../loadConfig'
+import Db_opelMachines from './components/DB_Machines/Db_opelMachines'
 const config = loadConfig()
 
 const url = `http://${config.apiBaseUrl}:5147/dashboard-live-data`
@@ -102,6 +103,7 @@ function App() {
             <Route path='Database' element={<Database />} />
             <Route path='database/dbeqcmachines' element={<Db_eqcMachines />}></Route>
             <Route path='database/dbasqmachines' element={<Db_asqMachines />}></Route>
+            <Route path='database/dbopelmachines' element={<Db_opelMachines />}></Route>
             {/*  */}
             <Route path='Connection' element={<Connection data={data} />} />
           </Routes>

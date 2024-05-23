@@ -1,6 +1,7 @@
 using api.Helpers;
 using api.Models.databaseModels.ASQ;
 using api.Models.databaseModels.EQC;
+using api.Models.databaseModels.OPEL;
 
 namespace api.Interfaces.CollectFromDb
 {
@@ -25,5 +26,10 @@ namespace api.Interfaces.CollectFromDb
         Task<List<Db_asq5Model>> GetAllAsq5Async(QueryObject query);
         Task<List<Db_asq6Model>> GetAllAsq6Async(QueryObject query);
 
+        //OPEL DB
+        Task<List<Db_ArmrestFr>> GetAll_opelArmrestFr(QueryObject query);
+        Task<List<Db_ArmrestRr>> GetAll_opelArmrestRr(QueryObject query);
+        // Task<List<Db_InsertFr>> GetAll_opelInsertFr(QueryObject query);
+        // Task<List<Db_InsertRr>> GetAll_opelInsertRr(QueryObject query);
     }
 }

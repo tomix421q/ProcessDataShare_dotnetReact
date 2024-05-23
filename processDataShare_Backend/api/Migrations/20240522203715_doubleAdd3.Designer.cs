@@ -12,8 +12,8 @@ using api.DbData;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240322150902_asqUpdate")]
-    partial class asqUpdate
+    [Migration("20240522203715_doubleAdd3")]
+    partial class doubleAdd3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -133,6 +133,12 @@ namespace api.Migrations
                     b.Property<float>("Global_WeightTolPlus")
                         .HasColumnType("real");
 
+                    b.Property<bool?>("Product_A")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Product_B")
+                        .HasColumnType("bit");
+
                     b.Property<int>("ROB1_ActStep")
                         .HasColumnType("int");
 
@@ -211,6 +217,12 @@ namespace api.Migrations
 
                     b.Property<float>("Global_WeightTolPlus")
                         .HasColumnType("real");
+
+                    b.Property<bool?>("Product_A")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Product_B")
+                        .HasColumnType("bit");
 
                     b.Property<int>("ROB1_ActStep")
                         .HasColumnType("int");
@@ -291,6 +303,12 @@ namespace api.Migrations
                     b.Property<float>("Global_WeightTolPlus")
                         .HasColumnType("real");
 
+                    b.Property<bool?>("Product_A")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Product_B")
+                        .HasColumnType("bit");
+
                     b.Property<int>("ROB1_ActStep")
                         .HasColumnType("int");
 
@@ -369,6 +387,12 @@ namespace api.Migrations
 
                     b.Property<float>("Global_WeightTolPlus")
                         .HasColumnType("real");
+
+                    b.Property<bool?>("Product_A")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Product_B")
+                        .HasColumnType("bit");
 
                     b.Property<int>("ROB1_ActStep")
                         .HasColumnType("int");
@@ -1104,6 +1128,56 @@ namespace api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EqcDatas_eqc8");
+                });
+
+            modelBuilder.Entity("api.Models.databaseModels.OPEL.Db_ArmrestFr", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("WaterTempLeft")
+                        .HasColumnType("float");
+
+                    b.Property<double>("WaterTempRight")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OpelArmrestFr_data");
+                });
+
+            modelBuilder.Entity("api.Models.databaseModels.OPEL.Db_ArmrestRr", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("WaterTempLeft")
+                        .HasColumnType("float");
+
+                    b.Property<double>("WaterTempRight")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OpelArmrestRr_data");
                 });
 #pragma warning restore 612, 618
         }
