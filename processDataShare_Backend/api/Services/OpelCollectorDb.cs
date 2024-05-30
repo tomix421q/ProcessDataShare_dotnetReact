@@ -48,7 +48,7 @@ namespace api.Services
                               {
                                     var resultArmrestFr = await opelDbDataRepo.GetLiveDataToDb_opelArmrest_Fr();
 
-                                    if (resultArmrestFr.TimeStamp.Hour == 9 || resultArmrestFr.TimeStamp.Hour == 13 || resultArmrestFr.TimeStamp.Hour == 16 || resultArmrestFr.TimeStamp.Hour == 19 && DateTime.Now > lastSaveTime_ArmrestFr.AddSeconds(40))
+                                    if (DateTime.Now.Hour >= 6 && DateTime.Now.Hour <= 22 && DateTime.Now.Minute == 0 && DateTime.Now.Second < 30 && DateTime.Now > lastSaveTime_ArmrestFr.AddSeconds(70))
                                     {
                                           await context.OpelArmrestFr_data.AddAsync(resultArmrestFr);
                                           await context.SaveChangesAsync();
@@ -66,7 +66,7 @@ namespace api.Services
                               {
                                     var resultArmrestRr = await opelDbDataRepo.GetLiveDataToDb_opelArmrest_Rr();
 
-                                    if (resultArmrestRr.TimeStamp.Hour == 9 || resultArmrestRr.TimeStamp.Hour == 13 || resultArmrestRr.TimeStamp.Hour == 16 || resultArmrestRr.TimeStamp.Hour == 19 && DateTime.Now > lastSaveTime_ArmrestRr.AddSeconds(40))
+                                    if (DateTime.Now.Hour >= 6 && DateTime.Now.Hour <= 22 && DateTime.Now.Minute == 0 && DateTime.Now.Second < 30 && DateTime.Now > lastSaveTime_ArmrestRr.AddSeconds(70))
                                     {
                                           await context.OpelArmrestRr_data.AddAsync(resultArmrestRr);
                                           await context.SaveChangesAsync();

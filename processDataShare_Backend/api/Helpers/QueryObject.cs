@@ -15,5 +15,10 @@ namespace api.Helpers
         public bool? SelectAsq_A { get; set; } = null;
         public bool? SelectAsq_B { get; set; } = null;
 
+        // 
+        // OPEL ADD [water]
+        public float? TempFrom { get; set; } = null;
+        public float? TempTo { get; set; } = null;
+
     }
 }

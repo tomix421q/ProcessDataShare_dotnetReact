@@ -1,6 +1,9 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { PiExportLight } from 'react-icons/pi'
 import loadConfig from '../../../loadConfig'
+import * as XLSX from 'xlsx'
+import { data } from 'autoprefixer'
 const config = loadConfig()
 
 const Db_opelMachines = () => {
@@ -14,6 +17,8 @@ const Db_opelMachines = () => {
   // SORT
   const [dateFrom, setDateFrom] = useState('') // from date
   const [dateTo, setDateTo] = useState('') // to date
+  const [tempFrom, setTempFrom] = useState('')
+  const [tempTo, setTempTo] = useState('')
   const [isDescending, setIsDescending] = useState(true) // descending ascending
   const [toolNum, setToolNum] = useState('') // filter tool number
 
@@ -33,6 +38,8 @@ const Db_opelMachines = () => {
           ToolNum: toolNum,
           PageNumber: pageNumber,
           PageSize: pageSize,
+          TempFrom: tempFrom,
+          TempTo: tempTo,
         },
       })
       var data = await response.data
@@ -55,7 +62,7 @@ const Db_opelMachines = () => {
     } else {
       fetchData()
     }
-  }, [opelMachine, isDescending, toolNum, pageNumber, pageSize, dateFrom, dateTo, pageSize])
+  }, [opelMachine, isDescending, toolNum, pageNumber, pageSize, dateFrom, dateTo, pageSize, tempFrom, tempTo])
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -83,14 +90,26 @@ const Db_opelMachines = () => {
     setPageNumber(1)
   }
 
-  const handleToolNumChange = (event) => {
-    const num = parseInt(event.target.value)
+  const handleWaterTempFromChange = (event) => {
+    let num = event.target.value
     if (num >= 0) {
-      setToolNum(num)
+      setTempFrom(num)
     } else {
-      setToolNum()
+      setTempFrom(0.0)
     }
     setPageNumber(1)
+    console.log(`temp from ${num}`)
+  }
+
+  const handleWaterTempToChange = (event) => {
+    let num = event.target.value
+    if (num >= 0) {
+      setTempTo(num)
+    } else {
+      setTempTo(100.0)
+    }
+    setPageNumber(1)
+    console.log(`temp to ${num}`)
   }
 
   const handleMachineChoose = (event) => {
@@ -115,6 +134,24 @@ const Db_opelMachines = () => {
     //     { value: 'opelInsertRR', label: 'Insert Rear' },
   ]
 
+  const handleExport = () => {
+    // Vytvorenie nového pracovného zošita
+    const worksheet = XLSX.utils.json_to_sheet(opelData)
+    const workbook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Data')
+
+    // Vytvorenie súboru a jeho stiahnutie
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' })
+    const blob = new Blob([excelBuffer], { type: 'application/octet-stream' })
+    const downloadUrl = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = downloadUrl
+    link.setAttribute('download', 'Export.xlsx')
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
   return (
     <div className='section flex flex-col lg:mx-20 mx-2'>
       {/*  */}
@@ -134,23 +171,50 @@ const Db_opelMachines = () => {
       </div>
       {/*  */}
       {/* SORT */}
-      <div className='flex flex-col lg:flex-row lg:space-x-10 -lg:space-y-4 border-l-4 border-collor1 pb-4 gap-y-2'>
+      <div className='flex flex-col lg:flex-row lg:space-x-8 -lg:space-y-4 border-l-4 border-collor1 pb-4 gap-y-2'>
         <div className='flex flex-row px-2 gap-x-2'>
-          {/* date from */}
+          {/* DATE from */}
           <div className='text-base flex flex-col items-center'>
             <label htmlFor='dateFrom'>Date from:</label>
             <input
               type='datetime-local'
               onChange={handleDateFromChange}
-              className='rounded-sm text-collor1 px-1 cursor-pointer'
+              className='rounded-sm text-collor1 px-1 cursor-pointer hover:ring-4 ring-collor1'
             />
           </div>
-          {/* date to  */}
+          {/* DATE to  */}
           <div className='text-base flex flex-col items-center'>
             <label htmlFor='dateTo'>Date to:</label>
-            <input type='datetime-local' onChange={handleDateToChange} className='rounded-sm text-collor1 px-1 cursor-pointer' />
+            <input
+              type='datetime-local'
+              onChange={handleDateToChange}
+              className='rounded-sm text-collor1 px-1 cursor-pointer hover:ring-4 ring-collor1'
+            />
           </div>
         </div>
+        <div className='flex px-2 mx-auto '>
+          {/* TEMP from */}
+          <div className='text-base flex flex-col items-center w-[6.25rem]'>
+            <label htmlFor='dateFrom'>Temp from:</label>
+            <input
+              placeholder='0.0'
+              type='number'
+              onChange={handleWaterTempFromChange}
+              className='rounded-sm text-collor1 px-1 cursor-pointer w-[80px] hover:ring-4 ring-collor1'
+            />
+          </div>
+          {/* TEMP to  */}
+          <div className='text-base flex flex-col items-center w-[6.25rem]'>
+            <label htmlFor='dateTo'>Temp to:</label>
+            <input
+              placeholder='100.0'
+              type='number'
+              onChange={handleWaterTempToChange}
+              className='rounded-sm text-collor1 px-1 cursor-pointer w-[80px] hover:ring-4 ring-collor1'
+            />
+          </div>
+        </div>
+        {/*  */}
         {/* items on page  */}
         <div className='text-base flex flex-col items-center'>
           <label htmlFor='records'>Items on page:</label>
@@ -158,26 +222,38 @@ const Db_opelMachines = () => {
             value={pageSize}
             type='number'
             id='itemspage'
-            className='mx-2 align-middle rounded-md text-collor1 cursor-pointer my-auto px-2 w-[80px]'
+            className='mx-2 align-middle rounded-md text-collor1 cursor-pointer px-2 w-[80px] hover:ring-4 ring-collor1'
             onChange={(e) => setPageSize(parseInt(e.target.value))}
           />
         </div>
 
         {/* descending */}
-        <div className='text-base flex flex-col items-center'>
-          <label htmlFor='isDescending'>Is Descending:</label>
-          <input
-            type='checkbox'
-            id='isDescending'
-            defaultChecked={true}
-            className='mx-2 align-middle size-5 rounded-md text-collor1 cursor-pointer my-auto'
-            onChange={handleIsDescendingChange}
-          />
-        </div>
-        {/* show records  */}
-        <div className='text-base flex flex-col items-center'>
-          <label htmlFor='records'>Records:</label>
-          <h2 className='text-collor2 pr-2 h2 text-2xl my-auto'>{totalRecords}</h2>
+        <div className='flex mx-auto justify-between space-x-7 max-lg:mt-6'>
+          <div className='text-base flex flex-col items-center text-center'>
+            <label htmlFor='isDescending'>Is Descending:</label>
+            <input
+              type='checkbox'
+              id='isDescending'
+              defaultChecked={true}
+              className='mx-2 align-middle size-5 rounded-md text-collor1 cursor-pointer hover:ring-4 ring-collor1'
+              onChange={handleIsDescendingChange}
+            />
+          </div>
+          {/* show records  */}
+          <div className='text-base flex flex-col items-center'>
+            <label htmlFor='records'>Records:</label>
+            <h2 className='text-collor2 pr-2 h2 text-2xl'>{totalRecords}</h2>
+          </div>
+          {/* EXPORT data  */}
+          <button onClick={handleExport} className='btn btn-sm m-0 group'>
+            <div className='centerBtn uppercase relative w-[100%] flex justify-between md:w-[85%]'>
+              <span className='md:text-xl text-base group-hover:mt-[-100px] group-hover:absolute duration-500'>Export data</span>
+              <span className='md:text-xl text-base mb-[-100px] group-hover:mb-[-4px] group-hover:relative  absolute duration-500'>
+                Download
+              </span>
+              <PiExportLight size={35} className='absolute right-0' />
+            </div>
+          </button>
         </div>
       </div>
 
@@ -218,11 +294,11 @@ const Db_opelMachines = () => {
                   <span className='text-collor1'> | </span>
                 </p>
                 <p>
-                  <span className='text-primary '> Water temp. Left :</span> {item.waterTempLeft} &deg;C
+                  <span className='text-primary '> Water temp. Left :</span> {item.waterTempLeft}&deg;C
                   <span className='text-collor1'> | </span>
                 </p>
                 <p>
-                  <span className='text-primary '> Water temp. Right :</span> {item.waterTempRight} &deg;C
+                  <span className='text-primary '> Water temp. Right :</span> {item.waterTempRight}&deg;C
                   <span className='text-collor1'> | </span>
                 </p>
               </div>

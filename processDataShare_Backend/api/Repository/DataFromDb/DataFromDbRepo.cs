@@ -465,6 +465,15 @@ namespace api.Repository.DataFromDb
                 dbData = dbData.Where(s => s.TimeStamp <= query.DateTo);
             }
 
+            if (query.TempFrom.HasValue)
+            {
+                dbData = dbData.Where(s => s.WaterTempLeft >= query.TempFrom || s.WaterTempRight >= query.TempFrom);
+            }
+            if (query.TempTo.HasValue)
+            {
+                dbData = dbData.Where(s => s.WaterTempLeft <= query.TempTo || s.WaterTempRight <= query.TempTo);
+            }
+
             dbData = query.IsDecsending ? dbData.OrderByDescending(s => s.TimeStamp) : dbData.OrderBy(s => s.TimeStamp);
             var totalRecords = await dbData.CountAsync();
             _totalRecords = totalRecords;
@@ -484,6 +493,15 @@ namespace api.Repository.DataFromDb
             if (query.DateTo.HasValue)
             {
                 dbData = dbData.Where(s => s.TimeStamp <= query.DateTo);
+            }
+
+            if (query.TempFrom.HasValue)
+            {
+                dbData = dbData.Where(s => s.WaterTempLeft >= query.TempFrom || s.WaterTempRight >= query.TempFrom);
+            }
+            if (query.TempTo.HasValue)
+            {
+                dbData = dbData.Where(s => s.WaterTempLeft <= query.TempTo || s.WaterTempRight <= query.TempTo);
             }
 
             dbData = query.IsDecsending ? dbData.OrderByDescending(s => s.TimeStamp) : dbData.OrderBy(s => s.TimeStamp);

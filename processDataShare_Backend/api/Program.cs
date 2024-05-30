@@ -69,11 +69,13 @@ app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 app.MapControllers();
 
-// app.Urls.Add("http://10.184.147.55:5147");
-app.Urls.Add("http://localhost:5147");
+app.Urls.Add("http://10.184.147.55:5147");
+// app.Urls.Add("http://localhost:5147");
 
 app.Run();
 
 // PRODUCTION DB STRING
 // "Data Source=SK3180WS0160\\SQLEXPRESS;Initial Catalog=PDSDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+// DEV DB STRING
+// "Server=localhost; Database=PDSDB; User Id=SA; Password=MyStrongPass123; TrustServerCertificate=True; Encrypt=True;"
 
