@@ -8,8 +8,9 @@ using api.Repository.DataToDb;
 using api.Repository.DataToDB;
 using api.Services;
 using Microsoft.EntityFrameworkCore;
-// SK3180WS0160\\SQLEXPRESS
-// SK3180WS0205\\SQLEXPRESS
+// SK3180WS0160\\SQLEXPRESS   --> old ntb
+// SK3180WS0205\\SQLEXPRESS   --> own
+// SK3180WS0522\\SQLEXPRESS   --> new ntb
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,7 +60,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors(builder =>
 {
-    builder.WithOrigins("http://10.184.147.55:3009", "http://localhost:5173")
+    builder.WithOrigins("http://10.184.152.177:3009", "http://localhost:5173")
            .AllowAnyHeader()
            .AllowAnyMethod()
            .AllowCredentials();
@@ -69,7 +70,7 @@ app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 app.MapControllers();
 
-app.Urls.Add("http://10.184.147.55:5147");
+app.Urls.Add("http://10.184.152.177:5147");
 // app.Urls.Add("http://localhost:5147");
 
 app.Run();
